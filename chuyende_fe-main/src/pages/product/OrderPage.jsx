@@ -14,7 +14,6 @@ const OrderPage = () => {
   const [note, setNote] = useState("");
 
   const customerId = 1; // Thay bằng giá trị thực tế
-  const staffId = 1; // Thay bằng giá trị thực tế
 
   const handleQuantityChange = (type) => {
     if (type === "increase") {
@@ -38,7 +37,6 @@ const OrderPage = () => {
       total_price: orderProduct.price * quantity,
       address: address,
       note: note,
-      staff_id: staffId,
       orderDetails: [
         {
           quantity: quantity,
@@ -51,7 +49,8 @@ const OrderPage = () => {
 
     try {
       const response = await axios.post("http://localhost:9999/api/order/create", orderData);
-      if (response.data.success) {
+      console.log(response.data);
+      if (response.data.check) {
         navigate("/order-success", { state: { orderData: response.data.order } });
       } else {
         console.error("Lỗi từ API:", response.data); // Log lỗi từ API
