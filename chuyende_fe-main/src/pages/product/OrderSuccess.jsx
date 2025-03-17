@@ -8,7 +8,15 @@ const OrderSuccess = () => {
 
     useEffect(() => {
         if (orderData?.order_id) {
-            fetch(`http://localhost:9999/api/order/${orderData.order_id}/order`)
+            const token = localStorage.getItem("jwt"); // Lấy token từ localStorage
+    
+            fetch(`http://localhost:9999/api/order/${orderData.order_id}/order`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`, // Truyền token vào header
+                    "Content-Type": "application/json",
+                },
+            })
                 .then(response => response.json())
                 .then(data => {
                     setOrderDetails(data.data || []);
