@@ -45,13 +45,11 @@ const OrderPage = () => {
         },
       ],
     };
-    console.log(orderProduct);
-
     try {
       const response = await axios.post("http://localhost:9999/api/order/create", orderData);
       console.log(response.data);
-      if (response.data.check) {
-        navigate("/order-success", { state: { orderData: response.data.order } });
+      if (response.data.isCheck) {
+        navigate("/order-success", { state: { orderData: response.data.data } });
       } else {
         console.error("Lỗi từ API:", response.data); // Log lỗi từ API
         alert("Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.");
