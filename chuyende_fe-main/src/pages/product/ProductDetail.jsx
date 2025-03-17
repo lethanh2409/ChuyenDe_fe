@@ -22,7 +22,7 @@ const ProductDetail = () => {
     event.stopPropagation(); // Ngăn sự kiện click lan truyền lên Link
     const jwt = localStorage.getItem("jwt"); // Lấy JWT từ localStorage
     if (jwt) {
-      dispatch(setOrderProduct(productDetail));
+      dispatch(setOrderProduct(productDetail?.product));
       navigate("/order");
     } else {
       navigate("/login");

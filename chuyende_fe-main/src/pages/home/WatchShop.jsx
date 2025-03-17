@@ -11,7 +11,6 @@ export default function WatchShop() {
   const [showMenu, setShowMenu] = useState(false);
 
   const { data: products, loading, error } = useSelector((state) => state?.getProduct || {});
-
   useEffect(() => {
     dispatch(getProductsRequest());
   }, [dispatch]);
@@ -19,6 +18,8 @@ export default function WatchShop() {
   const handleBuyNow = (event, product) => {
     event.stopPropagation(); // Ngăn sự kiện click lan truyền lên Link
     const jwt = localStorage.getItem("jwt"); // Lấy JWT từ localStorage
+    console.log(product)
+    dispatch(setOrderProduct(product));
     if (jwt) {
       dispatch(setOrderProduct(product));
       navigate("/order");
@@ -26,6 +27,7 @@ export default function WatchShop() {
       navigate("/login");
     }
   };
+
 
   const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin người dùng
   const jwt = localStorage.getItem("jwt"); // Lấy token

@@ -6,21 +6,22 @@ import { useNavigate } from "react-router-dom";
 const OrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderProduct = useSelector((state) => state?.order?.orderProduct?.product);
+  const orderProduct = useSelector((state) => state?.order?.orderProduct);
   const [quantity, setQuantity] = useState(1);
   const [recipientName, setRecipientName] = useState("");
   const [recipientPhone, setRecipientPhone] = useState("");
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
-
+  console.log("producyt",orderProduct)
   const customerId = 1; // Thay bằng giá trị thực tế
   const handleQuantityChange = (type) => {
-    if (type === "increase") {
+    if (type === "increase" && quantity < orderProduct.quantity) {
       setQuantity(quantity + 1);
     } else if (type === "decrease" && quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
+  
 
   const handleCreateOrder = async () => {
     if (!orderProduct) {
@@ -101,21 +102,28 @@ const OrderPage = () => {
                   </div>
 
                   {/* Chỉnh số lượng */}
-                  <div className="ml-auto flex items-center border rounded-md">
-                    <button
-                        className="px-4 py-2 border-r"
-                        onClick={() => handleQuantityChange("decrease")}
-                    >
-                      -
-                    </button>
-                    <span className="px-6 text-lg">{quantity}</span>
-                    <button
-                        className="px-4 py-2 border-l"
-                        onClick={() => handleQuantityChange("increase")}
-                    >
-                      +
-                    </button>
-                  </div>
+                  {orderProduct.quantity > 0 ? (
+  <div className="ml-auto flex items-center border rounded-md">
+    <button
+      className="px-4 py-2 border-r disabled:opacity-50 disabled:cursor-not-allowed"
+      onClick={() => handleQuantityChange("decrease")}
+      disabled={quantity <= 1}
+    >
+      -
+    </button>
+    <span className="px-6 text-lg">{quantity}</span>
+    <button
+      className="px-4 py-2 border-l disabled:opacity-50 disabled:cursor-not-allowed"
+      onClick={() => handleQuantityChange("increase")}
+      disabled={quantity >= orderProduct.quantity}
+    >
+      +
+    </button>
+  </div>
+) : (
+  <p className="text-red-500 font-semibold">Hết hàng</p>
+)}
+
                 </div>
               </div>
 
