@@ -17,10 +17,15 @@ const ProductDetail = () => {
   }, [id, dispatch]);
 
   const navigate = useNavigate();
-
-  const handleBuyNow = () => {
-    dispatch(setOrderProduct(product)); // Lưu sản phẩm vào Redux store
-    navigate("/order"); // Điều hướng đến trang đặt hàng mà không cần id
+  const handleBuyNow = (event, product) => {
+    event.stopPropagation(); // Ngăn sự kiện click lan truyền lên Link
+    const jwt = localStorage.getItem("jwt"); // Lấy JWT từ localStorage
+    if (jwt) {
+      dispatch(setOrderProduct(product));
+      navigate("/order");
+    } else {
+      navigate("/login");
+    }
   };
 
   if (loading) return <p>Loading...</p>;

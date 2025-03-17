@@ -14,11 +14,16 @@ function* handleLogin(action) {
     }
 
     const data = yield response.json();
+
+    // Lưu token vào localStorage
+    localStorage.setItem("jwt", data.token);
+
     yield put(loginSuccess(data));
   } catch (error) {
     yield put(loginFailure(error.message));
   }
 }
+
 
 export function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, handleLogin);

@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="" element={<AuthForm />} />
+        <Route path = "/login" element={<AuthForm />} />
         <Route path="/product/add" element={<AddProduct />} />
         <Route path="/home" element={<WatchShop />} /><Route path="/product/:id" element={<ProductDetail />} /> {/* Route động */}
         <Route path="/order" element={<OrderPage />} /><Route path="/order-success" element={<OrderSuccess />} />
