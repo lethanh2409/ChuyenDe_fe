@@ -35,7 +35,6 @@ export default function WatchShop() {
     localStorage.removeItem("user");
     navigate("/login");
   };
-
   return (
     <div className="w-full min-h-screen bg-white">
       {/* Navbar */}
@@ -89,48 +88,55 @@ export default function WatchShop() {
       {/* Product Grid */}
       <div className="flex items-center justify-center mt-10 px-4">
         <div className="grid grid-cols-4 gap-6 w-[80%]">
-          {products.map((product) => (
-            <div key={product.product_id} className="p-4 border rounded-lg shadow-lg bg-white relative">
-              <Link to={`/product/${product.product_id}`} className="block">
-                {product.sale && (
-                  <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold uppercase rounded">
-                    SALE
-                  </span>
-                )}
+        {products.map((product) => (
+  <div key={product.product_id} className="p-4 border rounded-lg shadow-lg bg-white relative">
+    <Link to={`/product/${product.product_id}`} className="block">
+      {product.sale && (
+        <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold uppercase rounded">
+          SALE
+        </span>
+      )}
 
-                <img
-                  src={product.image}
-                  alt={product.product_name}
-                  className="w-full h-40 object-contain p-2"
-                />
+      <img
+        src={product.image}
+        alt={product.product_name}
+        className="w-full h-40 object-contain p-2"
+      />
 
-                <h2 className="text-lg font-bold text-orange-500 mt-2 text-center">
-                  {product.product_name}
-                </h2>
+      <h2 className="text-lg font-bold text-orange-500 mt-2 text-center">
+        {product.product_name}
+      </h2>
 
-                <div className="text-center mt-2">
-                  {product.oldPrice && (
-                    <p className="text-gray-500 line-through text-sm">
-                      {product.oldPrice} đ
-                    </p>
-                  )}
-                  <p className="text-black font-semibold text-lg">
-                    {product.price.toLocaleString("vi-VN")} đ
-                  </p>
-                </div>
-              </Link>
+      <div className="text-center mt-2">
+        {product.oldPrice && (
+          <p className="text-gray-500 line-through text-sm">
+            {product.oldPrice} đ
+          </p>
+        )}
+        <p className="text-black font-semibold text-lg">
+          {product.price.toLocaleString("vi-VN")} đ
+        </p>
+      </div>
+    </Link>
 
-              {/* Nút Mua ngay */}
-              <div className="flex justify-center mt-2">
-                <button
-                  className="bg-orange-500 text-white px-6 py-2 rounded-lg font-bold"
-                  onClick={(event) => handleBuyNow(event, product)}
-                >
-                  Mua ngay
-                </button>
-              </div>
-            </div>
-          ))}
+    {/* Kiểm tra số lượng sản phẩm */}
+    <div className="flex justify-center mt-2">
+      {product.quantity > 0 ? (
+        <button
+          className="bg-orange-500 text-white px-6 py-2 rounded-lg font-bold"
+          onClick={(event) => handleBuyNow(event, product)}
+        >
+          Mua ngay
+        </button>
+      ) : (
+        <span className="bg-gray-400 text-white px-6 py-2 rounded-lg font-bold">
+          Hết hàng
+        </span>
+      )}
+    </div>
+  </div>
+))}
+
         </div>
       </div>
     </div>

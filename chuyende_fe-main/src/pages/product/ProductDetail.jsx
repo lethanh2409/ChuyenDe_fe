@@ -8,7 +8,8 @@ import { setOrderProduct } from "../../redux/actions/orderAction.js";
 const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { product, loading, error } = useSelector((state) => state.productDetail);
+  const { product, loading, error } = useSelector((state) => state?.productDetail);
+  const productDetail = useSelector((state) => state?.productDetail)
 
   useEffect(() => {
     if (id) {
@@ -21,7 +22,7 @@ const ProductDetail = () => {
     event.stopPropagation(); // Ngăn sự kiện click lan truyền lên Link
     const jwt = localStorage.getItem("jwt"); // Lấy JWT từ localStorage
     if (jwt) {
-      dispatch(setOrderProduct(product));
+      dispatch(setOrderProduct(productDetail));
       navigate("/order");
     } else {
       navigate("/login");
@@ -79,11 +80,13 @@ const ProductDetail = () => {
                     </ul>
                   </div>
                   <button
-                      className="bg-orange-500 text-white py-3 px-6 rounded-lg w-full text-lg font-semibold"
-                      onClick={handleBuyNow}
-                  >
-                    MUA NGAY
-                  </button>
+  className={`py-3 px-6 rounded-lg w-full text-lg font-semibold ${
+    product.quantity > 0 ? "bg-orange-500 text-white" : "bg-gray-400 text-white cursor-not-allowed"
+  }`}
+  onClick={product.quantity > 0 ? handleBuyNow : null}
+>
+  {product.quantity > 0 ? "MUA NGAY" : "HẾT HÀNG"}
+</button>
                 </div>
               </div>
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const OrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderProduct = useSelector((state) => state.order.orderProduct);
+  const orderProduct = useSelector((state) => state?.order?.orderProduct?.product);
   const [quantity, setQuantity] = useState(1);
   const [recipientName, setRecipientName] = useState("");
   const [recipientPhone, setRecipientPhone] = useState("");
@@ -14,7 +14,6 @@ const OrderPage = () => {
   const [note, setNote] = useState("");
 
   const customerId = 1; // Thay bằng giá trị thực tế
-
   const handleQuantityChange = (type) => {
     if (type === "increase") {
       setQuantity(quantity + 1);
